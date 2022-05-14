@@ -9,7 +9,7 @@ mod collide;
 mod draw;
 mod entity;
 mod player;
-use entity::EntityMovable;
+use player::Player;
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
@@ -26,7 +26,7 @@ pub fn main() -> Result<(), String> {
     canvas.clear();
     canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
-    let mut entity = EntityMovable::new(0, 550, Color::BLUE);
+    let mut entity = Player::new(0, 550);
     'running: loop {
         for event in event_pump.poll_iter() {
             match event {

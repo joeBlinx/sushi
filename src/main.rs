@@ -25,7 +25,7 @@ pub fn main() -> Result<(), String> {
     canvas.clear();
     canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
-    let mut entity = EntityMovable::new(0, 0);
+    let mut entity = EntityMovable::new(0, 550);
     'running: loop {
         for event in event_pump.poll_iter() {
             match event {
@@ -46,7 +46,7 @@ pub fn main() -> Result<(), String> {
         draw::clear_canvas(&mut canvas);
         draw::draw_rectangle(&entity, &mut canvas).unwrap();
         canvas.present();
-        ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 30));
+        ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
         // The rest of the game loop goes here...
     }
 

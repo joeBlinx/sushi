@@ -5,7 +5,6 @@ use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
 use std::time::Duration;
 
-
 mod draw;
 mod entity;
 use entity::EntityBase;
@@ -16,7 +15,6 @@ pub fn main() -> Result<(), String> {
     let window = video_subsystem
         .window("Sushi", 800, 600)
         .position_centered()
-        .opengl()
         .build()
         .map_err(|e| e.to_string())?;
 
@@ -26,7 +24,7 @@ pub fn main() -> Result<(), String> {
     canvas.clear();
     canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
-    let entity = EntityBase{};
+    let mut entity = EntityBase::new(0, 0);
 
     'running: loop {
         for event in event_pump.poll_iter() {
@@ -39,10 +37,8 @@ pub fn main() -> Result<(), String> {
                 _ => {}
             }
         }
-
-        canvas.set_draw_color(Color::RGB(130, 130, 130));
-        canvas.clear();
-        canvas.set_draw_color(Color::RGB(255, 0, 0));
+        entity.move_xy(1, 1);
+        draw::clear_canvas(&mut canvas);
         draw::draw_rectangle(&entity, &mut canvas).unwrap();
         canvas.present();
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 30));

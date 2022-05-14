@@ -23,6 +23,9 @@ impl Player {
     pub fn add_transfo_truc(&mut self, transfo_truc: TransfoTruc) {
         self.transfo_trucs.push(transfo_truc);
     }
+    pub fn get_transfo_trucs_count(&self) -> usize {
+        self.transfo_trucs.len()
+    }
 }
 impl Draw for Player {
     fn get_rect(&self) -> Rect {

@@ -22,8 +22,11 @@ fn update(player: &mut Player, transfo_trucs: &mut Vec<TransfoTruc>) {
         return true;
     });
 }
+
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
+    let ttf_context = sdl2::ttf::init().unwrap();
+    let arial_font = ttf_context.load_font("arial.ttf", 12).unwrap();
     let video_subsystem = sdl_context.video()?;
 
     let window = video_subsystem
@@ -67,6 +70,11 @@ pub fn main() -> Result<(), String> {
             draw::draw_rectangle(transfo_truc, &mut canvas).unwrap();
         }
         draw::draw_rectangle(&player, &mut canvas).unwrap();
+        draw::display_text(
+            &mut canvas,
+            &arial_font,
+            &player.get_transfo_trucs_count().to_string(),
+        );
         canvas.present();
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
         // The rest of the game loop goes here...

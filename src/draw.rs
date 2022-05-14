@@ -1,5 +1,6 @@
 extern crate sdl2;
 use sdl2::pixels::Color;
+use sdl2::ttf::Font;
 use sdl2::video::Window;
 use sdl2::{rect::Rect, render::Canvas};
 pub trait Draw {
@@ -16,4 +17,13 @@ pub fn draw_rectangle<T: Draw>(entity: &T, canvas: &mut Canvas<Window>) -> Resul
 pub fn clear_canvas(canvas: &mut Canvas<Window>) {
     canvas.set_draw_color(Color::RGB(130, 130, 130));
     canvas.clear();
+}
+pub fn display_text(canvas: &mut Canvas<Window>, font: &Font, text: &str) {
+    let color = Color::WHITE;
+    let surface = font.render(text).solid(color).unwrap();
+    let texture_creator = canvas.texture_creator();
+    let mut texture = sdl2::render::Texture::from_surface(&surface, &texture_creator).unwrap();
+    canvas
+        .copy(&texture, None, Rect::new(25, 25, 25, 50))
+        .unwrap();
 }

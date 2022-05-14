@@ -10,6 +10,8 @@ mod draw;
 mod entity;
 mod player;
 use player::Player;
+mod transfo_truc;
+use transfo_truc::TransfoTruc;
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
@@ -27,6 +29,11 @@ pub fn main() -> Result<(), String> {
     canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
     let mut entity = Player::new(0, 550);
+    let mut transfo_trucs = vec![
+        TransfoTruc::new(150, 550),
+        TransfoTruc::new(210, 550),
+        TransfoTruc::new(280, 550),
+    ];
     'running: loop {
         for event in event_pump.poll_iter() {
             match event {
@@ -45,6 +52,9 @@ pub fn main() -> Result<(), String> {
             entity.move_xy(-1, 0);
         }
         draw::clear_canvas(&mut canvas);
+        for transfo_truc in transfo_trucs.iter() {
+            draw::draw_rectangle(transfo_truc, &mut canvas).unwrap();
+        }
         draw::draw_rectangle(&entity, &mut canvas).unwrap();
         canvas.present();
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));

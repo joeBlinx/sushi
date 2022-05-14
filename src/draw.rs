@@ -31,7 +31,7 @@ pub fn display_text(canvas: &mut Canvas<Window>, font: &Font, text: &str) {
     let color = Color::WHITE;
     let surface = font.render(text).solid(color).unwrap();
     let texture_creator = canvas.texture_creator();
-    let mut texture = sdl2::render::Texture::from_surface(&surface, &texture_creator).unwrap();
+    let texture = sdl2::render::Texture::from_surface(&surface, &texture_creator).unwrap();
     canvas
         .copy(&texture, None, Rect::new(25, 25, 25, 50))
         .unwrap();

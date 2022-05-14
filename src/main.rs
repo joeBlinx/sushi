@@ -1,13 +1,14 @@
 extern crate sdl2;
 
 use sdl2::event::Event;
+use sdl2::keyboard::KeyboardState;
 use sdl2::keyboard::Keycode;
+use sdl2::keyboard::Scancode;
 use sdl2::pixels::Color;
 use std::time::Duration;
-
 mod draw;
 mod entity;
-use entity::EntityBase;
+use entity::EntityMovable;
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
@@ -24,8 +25,7 @@ pub fn main() -> Result<(), String> {
     canvas.clear();
     canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
-    let mut entity = EntityBase::new(0, 0);
-
+    let mut entity = EntityMovable::new(0, 0);
     'running: loop {
         for event in event_pump.poll_iter() {
             match event {
@@ -37,7 +37,12 @@ pub fn main() -> Result<(), String> {
                 _ => {}
             }
         }
-        entity.move_xy(1, 1);
+        let keyboard_state = event_pump.keyboard_state();
+        if keyboard_state.is_scancode_pressed(Scancode::Right) {
+            entity.move_xy(1, 0);
+        } else if keyboard_state.is_scancode_pressed(Scancode::Left) {
+            entity.move_xy(-1, 0);
+        }
         draw::clear_canvas(&mut canvas);
         draw::draw_rectangle(&entity, &mut canvas).unwrap();
         canvas.present();

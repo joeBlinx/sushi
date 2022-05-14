@@ -11,7 +11,17 @@ mod entity;
 mod player;
 use player::Player;
 mod transfo_truc;
+use collide::collide;
 use transfo_truc::TransfoTruc;
+fn update(player: &mut Player, transfo_trucs: &mut Vec<TransfoTruc>) {
+    transfo_trucs.retain(|x| {
+        if collide(x, player) {
+            player.add_transfo_truc(x.clone());
+            return false;
+        }
+        return true;
+    });
+}
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
@@ -28,7 +38,7 @@ pub fn main() -> Result<(), String> {
     canvas.clear();
     canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
-    let mut entity = Player::new(0, 550);
+    let mut player = Player::new(0, 550);
     let mut transfo_trucs = vec![
         TransfoTruc::new(150, 550),
         TransfoTruc::new(210, 550),
@@ -47,15 +57,16 @@ pub fn main() -> Result<(), String> {
         }
         let keyboard_state = event_pump.keyboard_state();
         if keyboard_state.is_scancode_pressed(Scancode::Right) {
-            entity.move_xy(1, 0);
+            player.move_xy(1, 0);
         } else if keyboard_state.is_scancode_pressed(Scancode::Left) {
-            entity.move_xy(-1, 0);
+            player.move_xy(-1, 0);
         }
+        update(&mut player, &mut transfo_trucs);
         draw::clear_canvas(&mut canvas);
         for transfo_truc in transfo_trucs.iter() {
             draw::draw_rectangle(transfo_truc, &mut canvas).unwrap();
         }
-        draw::draw_rectangle(&entity, &mut canvas).unwrap();
+        draw::draw_rectangle(&player, &mut canvas).unwrap();
         canvas.present();
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
         // The rest of the game loop goes here...

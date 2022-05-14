@@ -4,10 +4,11 @@ use sdl2::rect::Rect;
 pub struct EntityBase {
     x: i32,
     y: i32,
+    color: Color,
 }
 impl EntityBase {
-    pub fn new(x: i32, y: i32) -> Self {
-        EntityBase { x, y }
+    pub fn new(x: i32, y: i32, color: Color) -> Self {
+        EntityBase { x, y, color }
     }
 }
 impl Draw for EntityBase {
@@ -15,7 +16,7 @@ impl Draw for EntityBase {
         return Rect::new(self.x, self.y, 50, 50);
     }
     fn get_color(&self) -> Color {
-        Color::RGB(255, 0, 0)
+        self.color
     }
 }
 pub struct EntityMovable {
@@ -23,9 +24,9 @@ pub struct EntityMovable {
     speed: i32,
 }
 impl EntityMovable {
-    pub fn new(x: i32, y: i32) -> Self {
+    pub fn new(x: i32, y: i32, color: Color) -> Self {
         EntityMovable {
-            entity: EntityBase::new(x, y),
+            entity: EntityBase::new(x, y, color),
             speed: 10,
         }
     }

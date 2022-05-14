@@ -25,7 +25,7 @@ pub fn main() -> Result<(), String> {
     canvas.clear();
     canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
-    let mut entity = EntityMovable::new(0, 550);
+    let mut entity = EntityMovable::new(0, 550, Color::BLUE);
     'running: loop {
         for event in event_pump.poll_iter() {
             match event {

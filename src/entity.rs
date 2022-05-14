@@ -2,6 +2,13 @@ use crate::collide::{Collider, Point, Sphere};
 use crate::draw::Draw;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
+pub trait GetPosition {
+    fn get_x(&self) -> i32;
+    fn get_y(&self) -> i32;
+}
+pub trait Movable {
+    fn move_xy(&mut self, x: i32, y: i32);
+}
 #[derive(Clone)]
 pub struct EntityBase {
     x: i32,
@@ -44,9 +51,19 @@ impl EntityMovable {
             speed: 10,
         }
     }
-    pub fn move_xy(&mut self, x: i32, y: i32) {
+}
+impl Movable for EntityMovable {
+    fn move_xy(&mut self, x: i32, y: i32) {
         self.entity.x += x * self.speed;
         self.entity.y += y * self.speed;
+    }
+}
+impl GetPosition for EntityMovable {
+    fn get_x(&self) -> i32 {
+        self.entity.x
+    }
+    fn get_y(&self) -> i32 {
+        self.entity.y
     }
 }
 impl Collider for EntityMovable {

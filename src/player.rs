@@ -1,30 +1,59 @@
 extern crate sdl2;
 use crate::collide::{Collider, Sphere};
 use crate::draw::Draw;
-use crate::entity::EntityMovable;
+use crate::entity::{EntityMovable, GetPosition, Movable};
+use crate::power::{PowerTrait, Sword};
 use crate::transfo_truc::TransfoTruc;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
-
+pub enum Power {
+    SWORD,
+}
 pub struct Player {
     entity: EntityMovable,
     transfo_trucs: Vec<TransfoTruc>,
+    power: Option<Box<dyn PowerTrait>>,
 }
 impl Player {
     pub fn new(x: i32, y: i32) -> Self {
         Player {
             entity: EntityMovable::new(x, y, Color::BLUE),
             transfo_trucs: Vec::<TransfoTruc>::new(),
+            power: None,
         }
-    }
-    pub fn move_xy(&mut self, x: i32, y: i32) {
-        self.entity.move_xy(x, y)
     }
     pub fn add_transfo_truc(&mut self, transfo_truc: TransfoTruc) {
         self.transfo_trucs.push(transfo_truc);
     }
     pub fn get_transfo_trucs_count(&self) -> usize {
         self.transfo_trucs.len()
+    }
+    pub fn use_power(&mut self, power: Power) {
+        use Power::*;
+        match power {
+            SWORD => {
+                self.power = Some(Box::new(Sword::new(self.get_x() + 50, self.get_y() - 10)));
+            }
+        }
+    }
+    pub fn get_power(&self) -> &Option<Box<dyn PowerTrait>> {
+        &self.power
+    }
+}
+impl Movable for Player {
+    fn move_xy(&mut self, x: i32, y: i32) {
+        self.entity.move_xy(x, y);
+        if let Some(power) = &mut self.power {
+            power.as_mut().move_xy(x, y);
+        }
+    }
+}
+impl GetPosition for Player {
+    fn get_x(&self) -> i32 {
+        self.entity.get_x()
+    }
+    fn get_y(&self) -> i32 {
+        self.entity.get_y()
     }
 }
 impl Draw for Player {

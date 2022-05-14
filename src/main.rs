@@ -1,5 +1,7 @@
 extern crate sdl2;
 
+use crate::entity::Movable;
+use crate::player::Power;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::keyboard::Scancode;
@@ -9,6 +11,7 @@ mod collide;
 mod draw;
 mod entity;
 mod player;
+mod power;
 use player::Player;
 mod transfo_truc;
 use collide::collide;
@@ -63,6 +66,8 @@ pub fn main() -> Result<(), String> {
             player.move_xy(1, 0);
         } else if keyboard_state.is_scancode_pressed(Scancode::Left) {
             player.move_xy(-1, 0);
+        } else if keyboard_state.is_scancode_pressed(Scancode::E) {
+            player.use_power(Power::SWORD);
         }
         update(&mut player, &mut transfo_trucs);
         draw::clear_canvas(&mut canvas);
@@ -70,6 +75,10 @@ pub fn main() -> Result<(), String> {
             draw::draw_rectangle(transfo_truc, &mut canvas).unwrap();
         }
         draw::draw_rectangle(&player, &mut canvas).unwrap();
+        match player.get_power() {
+            None => {}
+            Some(power) => draw::draw_rectangle_dyn(power.as_ref(), &mut canvas).unwrap(),
+        }
         draw::display_text(
             &mut canvas,
             &arial_font,

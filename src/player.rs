@@ -32,7 +32,9 @@ impl Player {
         use Power::*;
         match power {
             SWORD => {
-                self.power = Some(Box::new(Sword::new(self.get_x() + 50, self.get_y() - 10)));
+                if self.transfo_trucs.len() >= 3 {
+                    self.power = Some(Box::new(Sword::new(self.get_x() + 50, self.get_y() - 10)));
+                }
             }
         }
     }

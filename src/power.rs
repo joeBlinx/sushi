@@ -11,7 +11,7 @@ pub struct Sword {
 impl Sword {
     pub fn new(x: i32, y: i32) -> Self {
         Sword {
-            entity: EntityMovable::new(x, y, Color::YELLOW),
+            entity: EntityMovable::new(x, y, 10, 50, Color::YELLOW),
         }
     }
 }

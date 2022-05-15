@@ -44,7 +44,7 @@ pub fn main() -> Result<(), String> {
     canvas.clear();
     canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
-    let mut player = Player::new(0, 550);
+    let mut player = Player::new(0, 500);
     let mut transfo_trucs = vec![
         TransfoTruc::new(150, 550),
         TransfoTruc::new(210, 550),

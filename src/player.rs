@@ -1,7 +1,7 @@
 extern crate sdl2;
-use crate::collide::{Collider, Sphere};
+use crate::collide::{Collider, Point, Sphere};
 use crate::draw::Draw;
-use crate::entity::{EntityMovable, GetPosition, Movable};
+use crate::entity::{EntityMovable, GetPosition, GetSize, Movable};
 use crate::power::{PowerTrait, Sword};
 use crate::transfo_truc::TransfoTruc;
 use sdl2::pixels::Color;
@@ -17,7 +17,7 @@ pub struct Player {
 impl Player {
     pub fn new(x: i32, y: i32) -> Self {
         Player {
-            entity: EntityMovable::new(x, y, Color::BLUE),
+            entity: EntityMovable::new(x, y, 50, 100, Color::BLUE),
             transfo_trucs: Vec::<TransfoTruc>::new(),
             power: None,
         }
@@ -66,8 +66,22 @@ impl Draw for Player {
         self.entity.get_color()
     }
 }
+impl GetSize for Player {
+    fn width(&self) -> u32 {
+        self.entity.width()
+    }
+    fn height(&self) -> u32 {
+        self.entity.height()
+    }
+}
 impl Collider for Player {
     fn get_collider(&self) -> Sphere {
-        self.entity.get_collider()
+        Sphere::new(
+            Point {
+                x: self.get_x(),
+                y: self.get_y() + self.height() as i32 / 2,
+            },
+            self.width() as i32,
+        )
     }
 }

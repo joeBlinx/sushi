@@ -11,7 +11,7 @@ pub struct TransfoTruc {
 impl TransfoTruc {
     pub fn new(x: i32, y: i32) -> Self {
         TransfoTruc {
-            entity: EntityBase::new(x, y, Color::GREEN),
+            entity: EntityBase::new(x, y, 50, 50, Color::GREEN),
         }
     }
 }

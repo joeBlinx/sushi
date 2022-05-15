@@ -52,9 +52,8 @@ impl World {
             draw::draw_rectangle(transfo_truc, canvas).unwrap();
         }
         draw::draw_rectangle(&self.player, canvas).unwrap();
-        match self.player.get_power() {
-            None => {}
-            Some(power) => draw::draw_rectangle_dyn(power.as_ref(), canvas).unwrap(),
+        if let Some(power) = &self.player.get_power() {
+            draw::draw_rectangle_dyn(power.as_ref(), canvas).unwrap();
         }
         draw::display_text(
             canvas,

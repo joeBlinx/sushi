@@ -25,6 +25,18 @@ fn update(player: &mut Player, transfo_trucs: &mut Vec<TransfoTruc>) {
         return true;
     });
 }
+fn event(player: &mut Player, event_pump: &sdl2::EventPump) {
+    let keyboard_state = event_pump.keyboard_state();
+    if keyboard_state.is_scancode_pressed(Scancode::Right) {
+        player.move_xy(1, 0);
+    } else if keyboard_state.is_scancode_pressed(Scancode::Left) {
+        player.move_xy(-1, 0);
+    } else if keyboard_state.is_scancode_pressed(Scancode::E) {
+        player.trigger_power(Power::SWORD);
+    } else if keyboard_state.is_scancode_pressed(Scancode::Q) {
+        player.use_power();
+    }
+}
 
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
@@ -61,16 +73,7 @@ pub fn main() -> Result<(), String> {
                 _ => {}
             }
         }
-        let keyboard_state = event_pump.keyboard_state();
-        if keyboard_state.is_scancode_pressed(Scancode::Right) {
-            player.move_xy(1, 0);
-        } else if keyboard_state.is_scancode_pressed(Scancode::Left) {
-            player.move_xy(-1, 0);
-        } else if keyboard_state.is_scancode_pressed(Scancode::E) {
-            player.trigger_power(Power::SWORD);
-        } else if keyboard_state.is_scancode_pressed(Scancode::Q) {
-            player.use_power();
-        }
+        event(&mut player, &event_pump);
         update(&mut player, &mut transfo_trucs);
         draw::clear_canvas(&mut canvas);
         for transfo_truc in transfo_trucs.iter() {

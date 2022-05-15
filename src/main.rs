@@ -67,7 +67,9 @@ pub fn main() -> Result<(), String> {
         } else if keyboard_state.is_scancode_pressed(Scancode::Left) {
             player.move_xy(-1, 0);
         } else if keyboard_state.is_scancode_pressed(Scancode::E) {
-            player.use_power(Power::SWORD);
+            player.trigger_power(Power::SWORD);
+        } else if keyboard_state.is_scancode_pressed(Scancode::Q) {
+            player.use_power();
         }
         update(&mut player, &mut transfo_trucs);
         draw::clear_canvas(&mut canvas);

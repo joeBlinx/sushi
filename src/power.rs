@@ -3,8 +3,10 @@ use crate::draw::Draw;
 use crate::entity::{EntityMovable, Movable};
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
-
-pub trait PowerTrait: Collider + Draw + Movable {}
+pub trait UsablePower {
+    fn use_power(&mut self);
+}
+pub trait PowerTrait: Collider + Draw + Movable + UsablePower {}
 pub struct Sword {
     entity: EntityMovable,
 }
@@ -13,6 +15,11 @@ impl Sword {
         Sword {
             entity: EntityMovable::new(x, y, 10, 50, Color::YELLOW),
         }
+    }
+}
+impl UsablePower for Sword {
+    fn use_power(&mut self) {
+        println!("Attaaaaack!!!!");
     }
 }
 impl PowerTrait for Sword {}

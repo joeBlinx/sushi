@@ -28,7 +28,7 @@ impl Player {
     pub fn get_transfo_trucs_count(&self) -> usize {
         self.transfo_trucs.len()
     }
-    pub fn use_power(&mut self, power: Power) {
+    pub fn trigger_power(&mut self, power: Power) {
         use Power::*;
         match power {
             SWORD => {
@@ -40,6 +40,11 @@ impl Player {
     }
     pub fn get_power(&self) -> &Option<Box<dyn PowerTrait>> {
         &self.power
+    }
+    pub fn use_power(&mut self) {
+        if let Some(power) = &mut self.power {
+            power.use_power();
+        }
     }
 }
 impl Movable for Player {

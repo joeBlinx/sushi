@@ -1,10 +1,10 @@
 extern crate sdl2;
 use crate::collide::{Collider, Sphere};
 use crate::draw::Draw;
-use crate::entity::{EntityMovable, GetPosition, GetSize, Movable};
+use crate::entity::{EntityMovable, Movable};
 use crate::power::{PowerTrait, Sword};
 use crate::transfo_truc::TransfoTruc;
-use crate::types::Point;
+use crate::types::{GetPosition, GetSize, Point, Size};
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 pub enum Power {
@@ -70,11 +70,8 @@ impl Draw for Player {
     }
 }
 impl GetSize for Player {
-    fn width(&self) -> u32 {
-        self.entity.width()
-    }
-    fn height(&self) -> u32 {
-        self.entity.height()
+    fn get_size(&self) -> Size {
+        self.entity.get_size()
     }
 }
 impl Collider for Player {
@@ -82,9 +79,9 @@ impl Collider for Player {
         Sphere::new(
             Point {
                 x: self.get_x(),
-                y: self.get_y() + self.height() as i32 / 2,
+                y: self.get_y() + self.get_height() as i32 / 2,
             },
-            self.width() as i32,
+            self.get_width() as i32,
         )
     }
 }

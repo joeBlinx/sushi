@@ -1,9 +1,6 @@
+use crate::types::Point;
 pub trait Collider {
     fn get_collider(&self) -> Sphere;
-}
-pub struct Point {
-    pub x: i32,
-    pub y: i32,
 }
 
 pub struct Sphere {

@@ -10,6 +10,7 @@ mod entity;
 mod player;
 mod power;
 mod transfo_truc;
+mod types;
 mod world;
 use crate::world::World;
 

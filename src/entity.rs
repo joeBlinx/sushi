@@ -1,14 +1,9 @@
 use crate::collide;
 use crate::collide::{Collider, Sphere};
 use crate::draw::Draw;
+use crate::types::Point;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
-
-#[derive(Clone)]
-pub struct Point {
-    x: i32,
-    y: i32,
-}
 pub trait GetPosition {
     fn get_position(&self) -> Point;
     fn get_x(&self) -> i32 {
@@ -66,7 +61,7 @@ impl Draw for EntityBase {
 impl Collider for EntityBase {
     fn get_collider(&self) -> Sphere {
         Sphere::new(
-            collide::Point {
+            Point {
                 x: self.get_x(),
                 y: self.get_y(),
             },

@@ -1,10 +1,10 @@
 extern crate sdl2;
-use crate::collide::{Collider, Point, Sphere};
+use crate::collide::{Collider, Sphere};
 use crate::draw::Draw;
-use crate::entity;
 use crate::entity::{EntityMovable, GetPosition, GetSize, Movable};
 use crate::power::{PowerTrait, Sword};
 use crate::transfo_truc::TransfoTruc;
+use crate::types::Point;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 pub enum Power {
@@ -57,7 +57,7 @@ impl Movable for Player {
     }
 }
 impl GetPosition for Player {
-    fn get_position(&self) -> entity::Point {
+    fn get_position(&self) -> Point {
         self.entity.get_position()
     }
 }

@@ -1,8 +1,8 @@
 use crate::collide::{Collider, Sphere};
 use crate::draw::Draw;
 use crate::entity::{EntityMovable, Movable};
+use crate::types::{GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 use sdl2::pixels::Color;
-use sdl2::rect::Rect;
 pub trait UsablePower {
     fn use_power(&mut self);
 }
@@ -28,10 +28,18 @@ impl Movable for Sword {
         self.entity.move_xy(x, y);
     }
 }
-impl Draw for Sword {
-    fn get_rect(&self) -> Rect {
-        self.entity.get_rect()
+impl GetPosition for Sword {
+    fn get_position(&self) -> Point {
+        self.entity.get_position()
     }
+}
+impl GetSize for Sword {
+    fn get_size(&self) -> Size {
+        self.entity.get_size()
+    }
+}
+impl GetDrawingRectangle for Sword {}
+impl Draw for Sword {
     fn get_color(&self) -> Color {
         self.entity.get_color()
     }

@@ -1,8 +1,8 @@
 use crate::collide::{Collider, Sphere};
 use crate::draw::Draw;
 use crate::entity::EntityBase;
+use crate::types::{GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 use sdl2::pixels::Color;
-use sdl2::rect::Rect;
 
 #[derive(Clone)]
 pub struct TransfoTruc {
@@ -15,10 +15,18 @@ impl TransfoTruc {
         }
     }
 }
-impl Draw for TransfoTruc {
-    fn get_rect(&self) -> Rect {
-        self.entity.get_rect()
+impl GetSize for TransfoTruc {
+    fn get_size(&self) -> Size {
+        self.entity.get_size()
     }
+}
+impl GetPosition for TransfoTruc {
+    fn get_position(&self) -> Point {
+        self.entity.get_position()
+    }
+}
+impl GetDrawingRectangle for TransfoTruc {}
+impl Draw for TransfoTruc {
     fn get_color(&self) -> Color {
         self.entity.get_color()
     }

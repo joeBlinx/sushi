@@ -1,11 +1,20 @@
 extern crate sdl2;
 use crate::power::PowerTrait;
+use crate::types::GetDrawingRectangle;
 use sdl2::pixels::Color;
 use sdl2::ttf::Font;
 use sdl2::video::Window;
 use sdl2::{rect::Rect, render::Canvas};
-pub trait Draw {
-    fn get_rect(&self) -> Rect;
+pub trait Draw: GetDrawingRectangle {
+    fn get_rect(&self) -> Rect {
+        let rectangle = self.get_drawing_rectangle();
+        Rect::new(
+            rectangle.upper_left.x,
+            rectangle.upper_left.y,
+            rectangle.size.width,
+            rectangle.size.height,
+        )
+    }
     fn get_color(&self) -> Color;
 }
 

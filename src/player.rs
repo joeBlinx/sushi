@@ -4,9 +4,8 @@ use crate::draw::Draw;
 use crate::entity::{EntityMovable, Movable};
 use crate::power::{PowerTrait, Sword};
 use crate::transfo_truc::TransfoTruc;
-use crate::types::{GetPosition, GetSize, Point, Size};
+use crate::types::{GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 use sdl2::pixels::Color;
-use sdl2::rect::Rect;
 pub enum Power {
     SWORD,
 }
@@ -61,10 +60,8 @@ impl GetPosition for Player {
         self.entity.get_position()
     }
 }
+impl GetDrawingRectangle for Player {}
 impl Draw for Player {
-    fn get_rect(&self) -> Rect {
-        self.entity.get_rect()
-    }
     fn get_color(&self) -> Color {
         self.entity.get_color()
     }

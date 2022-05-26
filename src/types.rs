@@ -26,3 +26,16 @@ pub trait GetSize {
         self.get_size().height
     }
 }
+#[derive(Clone)]
+pub struct DrawingRectangle {
+    pub upper_left: Point,
+    pub size: Size,
+}
+pub trait GetDrawingRectangle: GetSize + GetPosition {
+    fn get_drawing_rectangle(&self) -> DrawingRectangle {
+        DrawingRectangle {
+            upper_left: self.get_position(),
+            size: self.get_size(),
+        }
+    }
+}

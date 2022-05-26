@@ -1,12 +1,10 @@
 use crate::collide::{Collider, Sphere};
-use crate::draw::Draw;
 use crate::entity::{EntityMovable, Movable};
-use crate::types::{GetDrawingRectangle, GetPosition, GetSize, Point, Size};
-use sdl2::pixels::Color;
+use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 pub trait UsablePower {
     fn use_power(&mut self);
 }
-pub trait PowerTrait: Collider + Draw + Movable + UsablePower {}
+pub trait PowerTrait: Collider + GetDrawingRectangle + GetColor + Movable + UsablePower {}
 pub struct Sword {
     entity: EntityMovable,
 }
@@ -39,7 +37,7 @@ impl GetSize for Sword {
     }
 }
 impl GetDrawingRectangle for Sword {}
-impl Draw for Sword {
+impl GetColor for Sword {
     fn get_color(&self) -> Color {
         self.entity.get_color()
     }

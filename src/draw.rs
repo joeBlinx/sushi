@@ -1,26 +1,35 @@
 extern crate sdl2;
 use crate::power::PowerTrait;
-use crate::types::GetDrawingRectangle;
+use crate::types;
+use crate::types::GetColor;
+use crate::types::{DrawingRectangle, GetDrawingRectangle};
 use sdl2::pixels::Color;
 use sdl2::ttf::Font;
 use sdl2::video::Window;
 use sdl2::{rect::Rect, render::Canvas};
-pub trait Draw: GetDrawingRectangle {
-    fn get_rect(&self) -> Rect {
-        let rectangle = self.get_drawing_rectangle();
-        Rect::new(
-            rectangle.upper_left.x,
-            rectangle.upper_left.y,
-            rectangle.size.width,
-            rectangle.size.height,
-        )
+fn to_sdl_rect(rectangle: DrawingRectangle) -> Rect {
+    Rect::new(
+        rectangle.upper_left.x,
+        rectangle.upper_left.y,
+        rectangle.size.width,
+        rectangle.size.height,
+    )
+}
+fn to_sdl_color(color: types::Color) -> Color {
+    Color {
+        r: color.red,
+        g: color.green,
+        b: color.blue,
+        a: color.alpha,
     }
-    fn get_color(&self) -> Color;
 }
 
-pub fn draw_rectangle<T: Draw>(entity: &T, canvas: &mut Canvas<Window>) -> Result<(), String> {
-    canvas.set_draw_color(entity.get_color());
-    canvas.fill_rect(entity.get_rect())?;
+pub fn draw_rectangle<T: GetDrawingRectangle + GetColor>(
+    entity: &T,
+    canvas: &mut Canvas<Window>,
+) -> Result<(), String> {
+    canvas.set_draw_color(to_sdl_color(entity.get_color()));
+    canvas.fill_rect(to_sdl_rect(entity.get_drawing_rectangle()))?;
     Ok(())
 }
 
@@ -28,8 +37,8 @@ pub fn draw_rectangle_dyn(
     entity: &dyn PowerTrait,
     canvas: &mut Canvas<Window>,
 ) -> Result<(), String> {
-    canvas.set_draw_color(entity.get_color());
-    canvas.fill_rect(entity.get_rect())?;
+    canvas.set_draw_color(to_sdl_color(entity.get_color()));
+    canvas.fill_rect(to_sdl_rect(entity.get_drawing_rectangle()))?;
     Ok(())
 }
 pub fn clear_canvas(canvas: &mut Canvas<Window>) {

@@ -1,11 +1,9 @@
 extern crate sdl2;
 use crate::collide::{Collider, Sphere};
-use crate::draw::Draw;
 use crate::entity::{EntityMovable, Movable};
 use crate::power::{PowerTrait, Sword};
 use crate::transfo_truc::TransfoTruc;
-use crate::types::{GetDrawingRectangle, GetPosition, GetSize, Point, Size};
-use sdl2::pixels::Color;
+use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 pub enum Power {
     SWORD,
 }
@@ -61,7 +59,7 @@ impl GetPosition for Player {
     }
 }
 impl GetDrawingRectangle for Player {}
-impl Draw for Player {
+impl GetColor for Player {
     fn get_color(&self) -> Color {
         self.entity.get_color()
     }

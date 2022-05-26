@@ -1,6 +1,7 @@
 extern crate sdl2;
 use crate::collide::{Collider, Point, Sphere};
 use crate::draw::Draw;
+use crate::entity;
 use crate::entity::{EntityMovable, GetPosition, GetSize, Movable};
 use crate::power::{PowerTrait, Sword};
 use crate::transfo_truc::TransfoTruc;
@@ -56,11 +57,8 @@ impl Movable for Player {
     }
 }
 impl GetPosition for Player {
-    fn get_x(&self) -> i32 {
-        self.entity.get_x()
-    }
-    fn get_y(&self) -> i32 {
-        self.entity.get_y()
+    fn get_position(&self) -> entity::Point {
+        self.entity.get_position()
     }
 }
 impl Draw for Player {

@@ -1,10 +1,22 @@
-use crate::collide::{Collider, Point, Sphere};
+use crate::collide;
+use crate::collide::{Collider, Sphere};
 use crate::draw::Draw;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
+
+#[derive(Clone)]
+pub struct Point {
+    x: i32,
+    y: i32,
+}
 pub trait GetPosition {
-    fn get_x(&self) -> i32;
-    fn get_y(&self) -> i32;
+    fn get_position(&self) -> Point;
+    fn get_x(&self) -> i32 {
+        self.get_position().x
+    }
+    fn get_y(&self) -> i32 {
+        self.get_position().y
+    }
 }
 pub trait GetSize {
     fn width(&self) -> u32;
@@ -15,15 +27,24 @@ pub trait Movable {
 }
 #[derive(Clone)]
 pub struct EntityBase {
-    x: i32,
-    y: i32,
+    position: Point,
     w: u32,
     h: u32,
     color: Color,
 }
 impl EntityBase {
     pub fn new(x: i32, y: i32, w: u32, h: u32, color: Color) -> Self {
-        EntityBase { x, y, w, h, color }
+        EntityBase {
+            position: Point { x, y },
+            w,
+            h,
+            color,
+        }
+    }
+}
+impl GetPosition for EntityBase {
+    fn get_position(&self) -> Point {
+        self.position.clone()
     }
 }
 impl GetSize for EntityBase {
@@ -36,7 +57,7 @@ impl GetSize for EntityBase {
 }
 impl Draw for EntityBase {
     fn get_rect(&self) -> Rect {
-        return Rect::new(self.x, self.y, self.w, self.h);
+        return Rect::new(self.get_x(), self.get_y(), self.w, self.h);
     }
     fn get_color(&self) -> Color {
         self.color
@@ -45,9 +66,9 @@ impl Draw for EntityBase {
 impl Collider for EntityBase {
     fn get_collider(&self) -> Sphere {
         Sphere::new(
-            Point {
-                x: self.x,
-                y: self.y,
+            collide::Point {
+                x: self.get_x(),
+                y: self.get_y(),
             },
             50 / 2,
         )
@@ -76,16 +97,13 @@ impl EntityMovable {
 }
 impl Movable for EntityMovable {
     fn move_xy(&mut self, x: i32, y: i32) {
-        self.entity.x += x * self.speed;
-        self.entity.y += y * self.speed;
+        self.entity.position.x += x * self.speed;
+        self.entity.position.y += y * self.speed;
     }
 }
 impl GetPosition for EntityMovable {
-    fn get_x(&self) -> i32 {
-        self.entity.x
-    }
-    fn get_y(&self) -> i32 {
-        self.entity.y
+    fn get_position(&self) -> Point {
+        self.entity.get_position()
     }
 }
 impl Collider for EntityMovable {

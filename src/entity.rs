@@ -1,4 +1,5 @@
-use crate::collide::{Collider, Sphere};
+use crate::collide::Collider;
+use crate::shapes::Sphere;
 use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 pub trait Movable {
     fn move_xy(&mut self, x: i32, y: i32);

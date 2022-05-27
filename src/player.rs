@@ -1,7 +1,8 @@
 extern crate sdl2;
-use crate::collide::{Collider, Sphere};
+use crate::collide::Collider;
 use crate::entity::{EntityMovable, Movable};
 use crate::power::{PowerTrait, Sword};
+use crate::shapes::Sphere;
 use crate::transfo_truc::TransfoTruc;
 use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 pub enum Power {

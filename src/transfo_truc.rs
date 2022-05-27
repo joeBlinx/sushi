@@ -1,5 +1,6 @@
-use crate::collide::{Collider, Sphere};
+use crate::collide::Collider;
 use crate::entity::EntityBase;
+use crate::shapes::Sphere;
 use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 
 #[derive(Clone)]

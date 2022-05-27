@@ -1,5 +1,6 @@
-use crate::collide::{Collider, Sphere};
+use crate::collide::Collider;
 use crate::entity::{EntityMovable, Movable};
+use crate::shapes::Sphere;
 use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 pub trait UsablePower {
     fn use_power(&mut self);

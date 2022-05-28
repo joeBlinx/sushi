@@ -30,7 +30,7 @@ impl GetColor for TransfoTruc {
         self.entity.get_color()
     }
 }
-impl Collider for TransfoTruc {
+impl Collider<Sphere> for TransfoTruc {
     fn get_collider(&self) -> Sphere {
         self.entity.get_collider()
     }

@@ -5,7 +5,10 @@ use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, P
 pub trait UsablePower {
     fn use_power(&mut self);
 }
-pub trait PowerTrait: Collider + GetDrawingRectangle + GetColor + Movable + UsablePower {}
+pub trait PowerTrait:
+    Collider<Sphere> + GetDrawingRectangle + GetColor + Movable + UsablePower
+{
+}
 pub struct Sword {
     entity: EntityMovable,
 }
@@ -43,7 +46,7 @@ impl GetColor for Sword {
         self.entity.get_color()
     }
 }
-impl Collider for Sword {
+impl Collider<Sphere> for Sword {
     fn get_collider(&self) -> Sphere {
         self.entity.get_collider()
     }

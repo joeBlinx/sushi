@@ -36,7 +36,7 @@ impl GetColor for EntityBase {
     }
 }
 
-impl Collider for EntityBase {
+impl Collider<Sphere> for EntityBase {
     fn get_collider(&self) -> Sphere {
         Sphere::new(
             Point {
@@ -76,7 +76,7 @@ impl GetPosition for EntityMovable {
         self.entity.get_position()
     }
 }
-impl Collider for EntityMovable {
+impl Collider<Sphere> for EntityMovable {
     fn get_collider(&self) -> Sphere {
         self.entity.get_collider()
     }

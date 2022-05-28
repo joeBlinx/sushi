@@ -70,7 +70,7 @@ impl GetSize for Player {
         self.entity.get_size()
     }
 }
-impl Collider for Player {
+impl Collider<Sphere> for Player {
     fn get_collider(&self) -> Sphere {
         Sphere::new(
             Point {

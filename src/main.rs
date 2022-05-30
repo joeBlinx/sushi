@@ -6,8 +6,10 @@ use std::time::Duration;
 mod collide;
 mod draw;
 mod entity;
+mod event;
 mod player;
 mod power;
+mod sdl2_bridge;
 mod shapes;
 mod transfo_truc;
 mod types;
@@ -41,7 +43,8 @@ pub fn main() -> Result<(), String> {
                 _ => {}
             }
         }
-        world.event(&event_pump);
+        let keyboard_state = event_pump.keyboard_state();
+        world.event(&keyboard_state);
         world.update();
         world.draw(&mut canvas, &arial_font);
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));

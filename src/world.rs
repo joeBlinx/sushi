@@ -1,10 +1,10 @@
 use crate::collide::collide;
 use crate::draw;
 use crate::entity::Movable;
+use crate::event::{Event, Key};
 use crate::player::Player;
 use crate::player::Power;
 use crate::transfo_truc::TransfoTruc;
-use sdl2::keyboard::Scancode;
 use sdl2::pixels::Color;
 use sdl2::render::Canvas;
 use sdl2::ttf::Font;
@@ -33,15 +33,14 @@ impl World {
             return true;
         });
     }
-    pub fn event(&mut self, event_pump: &sdl2::EventPump) {
-        let keyboard_state = event_pump.keyboard_state();
-        if keyboard_state.is_scancode_pressed(Scancode::Right) {
+    pub fn event(&mut self, event: &impl Event) {
+        if event.is_pressed(Key::Right) {
             self.player.move_xy(1, 0);
-        } else if keyboard_state.is_scancode_pressed(Scancode::Left) {
+        } else if event.is_pressed(Key::Left) {
             self.player.move_xy(-1, 0);
-        } else if keyboard_state.is_scancode_pressed(Scancode::E) {
+        } else if event.is_pressed(Key::E) {
             self.player.trigger_power(Power::SWORD);
-        } else if keyboard_state.is_scancode_pressed(Scancode::Q) {
+        } else if event.is_pressed(Key::Q) {
             self.player.use_power();
         }
     }

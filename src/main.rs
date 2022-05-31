@@ -1,8 +1,10 @@
 extern crate sdl2;
 
+use draw::CanvasFont;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use std::time::Duration;
+mod canvas;
 mod collide;
 mod draw;
 mod entity;
@@ -46,7 +48,11 @@ pub fn main() -> Result<(), String> {
         let keyboard_state = event_pump.keyboard_state();
         world.event(&keyboard_state);
         world.update();
-        world.draw(&mut canvas, &arial_font);
+        world.draw(&mut CanvasFont {
+            canvas: &mut canvas,
+            font: &arial_font,
+        });
+
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
         // The rest of the game loop goes here...
     }

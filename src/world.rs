@@ -1,14 +1,10 @@
+use crate::canvas::Canvas;
 use crate::collide::collide;
-use crate::draw;
 use crate::entity::Movable;
 use crate::event::{Event, Key};
 use crate::player::Player;
 use crate::player::Power;
 use crate::transfo_truc::TransfoTruc;
-use sdl2::pixels::Color;
-use sdl2::render::Canvas;
-use sdl2::ttf::Font;
-use sdl2::video::Window;
 pub struct World {
     player: Player,
     transfo_trucs: Vec<TransfoTruc>,
@@ -44,21 +40,16 @@ impl World {
             self.player.use_power();
         }
     }
-    pub fn draw(&mut self, canvas: &mut Canvas<Window>, font: &Font) {
-        canvas.set_draw_color(Color::RGB(130, 130, 130));
+    pub fn draw(&mut self, canvas: &mut impl Canvas) {
         canvas.clear();
         for transfo_truc in self.transfo_trucs.iter() {
-            draw::draw_rectangle(transfo_truc, canvas).unwrap();
+            canvas.draw_rectangle(transfo_truc);
         }
-        draw::draw_rectangle(&self.player, canvas).unwrap();
+        canvas.draw_rectangle(&self.player);
         if let Some(power) = &self.player.get_power() {
-            draw::draw_rectangle_dyn(power.as_ref(), canvas).unwrap();
+            canvas.draw_power(power.as_ref());
         }
-        draw::display_text(
-            canvas,
-            &font,
-            &self.player.get_transfo_trucs_count().to_string(),
-        );
+        canvas.draw_text(&self.player.get_transfo_trucs_count().to_string());
         canvas.present();
     }
 }

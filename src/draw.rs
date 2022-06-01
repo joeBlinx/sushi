@@ -2,7 +2,6 @@ extern crate sdl2;
 use crate::canvas::Canvas;
 use crate::power::PowerTrait;
 use crate::types;
-use crate::types::GetColor;
 use crate::types::{DrawingRectangle, GetDrawingRectangle};
 use sdl2::pixels::Color;
 use sdl2::ttf::Font;
@@ -25,7 +24,7 @@ fn to_sdl_color(color: types::Color) -> Color {
     }
 }
 
-pub fn draw_rectangle<T: GetDrawingRectangle + GetColor>(
+pub fn draw_rectangle<T: GetDrawingRectangle>(
     entity: &T,
     canvas: &mut render::Canvas<Window>,
 ) -> Result<(), String> {
@@ -63,7 +62,7 @@ impl<'a> Canvas for CanvasFont<'a> {
     fn clear(&mut self) {
         clear_canvas(self.canvas);
     }
-    fn draw_rectangle<T: GetDrawingRectangle + GetColor>(&mut self, rectangle: &T) {
+    fn draw_rectangle<T: GetDrawingRectangle>(&mut self, rectangle: &T) {
         draw_rectangle(rectangle, self.canvas).unwrap();
     }
     fn draw_text(&mut self, text: &str) {

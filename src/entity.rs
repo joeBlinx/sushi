@@ -1,6 +1,6 @@
 use crate::collide::Collider;
 use crate::shapes::Sphere;
-use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
+use crate::types::{Color, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 pub trait Movable {
     fn move_xy(&mut self, x: i32, y: i32);
 }
@@ -29,8 +29,7 @@ impl GetSize for EntityBase {
         self.size.clone()
     }
 }
-impl GetDrawingRectangle for EntityBase {}
-impl GetColor for EntityBase {
+impl GetDrawingRectangle for EntityBase {
     fn get_color(&self) -> Color {
         self.color.clone()
     }
@@ -81,8 +80,7 @@ impl Collider<Sphere> for EntityMovable {
         self.entity.get_collider()
     }
 }
-impl GetDrawingRectangle for EntityMovable {}
-impl GetColor for EntityMovable {
+impl GetDrawingRectangle for EntityMovable {
     fn get_color(&self) -> Color {
         self.entity.get_color()
     }

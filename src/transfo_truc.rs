@@ -1,7 +1,7 @@
 use crate::collide::Collider;
 use crate::entity::EntityBase;
 use crate::shapes::Sphere;
-use crate::types::{Color, GetColor, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
+use crate::types::{Color, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
 
 #[derive(Clone)]
 pub struct TransfoTruc {
@@ -24,8 +24,7 @@ impl GetPosition for TransfoTruc {
         self.entity.get_position()
     }
 }
-impl GetDrawingRectangle for TransfoTruc {}
-impl GetColor for TransfoTruc {
+impl GetDrawingRectangle for TransfoTruc {
     fn get_color(&self) -> Color {
         self.entity.get_color()
     }

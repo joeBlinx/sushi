@@ -40,9 +40,6 @@ impl Color {
         alpha: 255,
     };
 }
-pub trait GetColor {
-    fn get_color(&self) -> Color;
-}
 pub trait GetPosition {
     fn get_position(&self) -> Point;
     fn get_x(&self) -> i32 {
@@ -68,4 +65,5 @@ pub trait GetDrawingRectangle: GetSize + GetPosition {
             size: self.get_size(),
         }
     }
+    fn get_color(&self) -> Color;
 }

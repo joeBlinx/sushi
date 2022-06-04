@@ -2,10 +2,16 @@ use crate::collide::Collider;
 use crate::entity::{EntityMovable, Movable};
 use crate::shapes::Sphere;
 use crate::types::{Color, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
-pub trait UsablePower {
+pub trait Power {
     fn use_power(&mut self);
+    fn trigger_power(user: &impl GetPosition) -> Box<dyn PowerTrait>
+    where
+        Self: Sized;
+    fn get_required_transo_truc() -> usize
+    where
+        Self: Sized;
 }
-pub trait PowerTrait: Collider<Sphere> + GetDrawingRectangle + Movable + UsablePower {}
+pub trait PowerTrait: Collider<Sphere> + GetDrawingRectangle + Movable + Power {}
 pub struct Sword {
     entity: EntityMovable,
 }
@@ -16,9 +22,15 @@ impl Sword {
         }
     }
 }
-impl UsablePower for Sword {
+impl Power for Sword {
     fn use_power(&mut self) {
         println!("Attaaaaack!!!!");
+    }
+    fn trigger_power(user: &impl GetPosition) -> Box<dyn PowerTrait> {
+        Box::new(Sword::new(user.get_x() + 50, user.get_y() - 10))
+    }
+    fn get_required_transo_truc() -> usize {
+        3
     }
 }
 impl PowerTrait for Sword {}

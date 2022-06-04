@@ -1,13 +1,10 @@
 extern crate sdl2;
 use crate::collide::Collider;
 use crate::entity::{EntityMovable, Movable};
-use crate::power::{PowerTrait, Sword};
+use crate::power::PowerTrait;
 use crate::shapes::Sphere;
 use crate::transfo_truc::TransfoTruc;
 use crate::types::{Color, GetDrawingRectangle, GetPosition, GetSize, Point, Size};
-pub enum Power {
-    SWORD,
-}
 pub struct Player {
     entity: EntityMovable,
     transfo_trucs: Vec<TransfoTruc>,
@@ -27,14 +24,9 @@ impl Player {
     pub fn get_transfo_trucs_count(&self) -> usize {
         self.transfo_trucs.len()
     }
-    pub fn trigger_power(&mut self, power: Power) {
-        use Power::*;
-        match power {
-            SWORD => {
-                if self.transfo_trucs.len() >= 3 {
-                    self.power = Some(Box::new(Sword::new(self.get_x() + 50, self.get_y() - 10)));
-                }
-            }
+    pub fn trigger_power<T: PowerTrait>(&mut self) {
+        if self.transfo_trucs.len() >= T::get_required_transo_truc() {
+            self.power = Some(T::trigger_power(self));
         }
     }
     pub fn get_power(&self) -> &Option<Box<dyn PowerTrait>> {

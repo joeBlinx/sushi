@@ -3,7 +3,8 @@ use crate::collide::collide;
 use crate::entity::Movable;
 use crate::event::{Event, Key};
 use crate::player::Player;
-use crate::player::Power;
+use crate::player::PowerType;
+use crate::power;
 use crate::transfo_truc::TransfoTruc;
 pub struct World {
     player: Player,
@@ -35,7 +36,7 @@ impl World {
         } else if event.is_pressed(Key::Left) {
             self.player.move_xy(-1, 0);
         } else if event.is_pressed(Key::E) {
-            self.player.trigger_power(Power::SWORD);
+            self.player.trigger_power::<power::Sword>();
         } else if event.is_pressed(Key::Q) {
             self.player.use_power();
         }

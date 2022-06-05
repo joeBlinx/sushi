@@ -3,7 +3,6 @@ use crate::collide::collide;
 use crate::entity::Movable;
 use crate::event::{Event, Key};
 use crate::player::Player;
-use crate::player::PowerType;
 use crate::power;
 use crate::transfo_truc::TransfoTruc;
 pub struct World {
